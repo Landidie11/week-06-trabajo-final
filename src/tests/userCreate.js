@@ -2,7 +2,7 @@ const User = require("../models/User")
 
 const userCreate = async () => {
     const user = {
-        firstNmae: 'Landie',
+        firstName: 'Landie',
         lastName: 'Thimot',
         email: 'landiefriend@gmail.com',
         password: 'landie1234',

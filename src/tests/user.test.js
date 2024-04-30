@@ -53,7 +53,7 @@ test("POST -> BASE_URL, shouls return statusCode 201, and res.body.firstName ===
 
 //testeo de rutas dinamicas
 
-test("Put -> 'BASE_URL/:id', should retur status code 200, res.body.lastName === userUpdate.lastName", async () => {
+test("Put -> 'BASE_URL/:id', should return statusCode 200, res.body.lastName === userUpdate.lastName", async () => {
 
     const userUpdate = {
         lastName: "Thimot"
@@ -63,7 +63,7 @@ test("Put -> 'BASE_URL/:id', should retur status code 200, res.body.lastName ===
     const res = await request(app)
     .put(`${BASE_URL}/${userId}`)
     .send(userUpdate)
-    .set('Authorization bearer', `${TOKEN}`)
+    .set('Authorization', `Bearer ${TOKEN}`)
 
     expect(res.statusCode).toBe(200)
     expect(res.body).toBeDefined()
@@ -89,21 +89,17 @@ test("POST -> 'BASE_URL/login', should return statusCode 200, and res.body.email
 
 test("POST 'BASE_URL/login', should return statusCode 401",async () => {
     const userInvalid = {
-        email: "landdiefriend@gmail.com",
-        password: "landie1234"
+        email: "landiefriend@gmail.com",
+        password: "Invalid credentials"
     }
 
     const res = await request(app)
     .post(`${BASE_URL}/login`)
-    .send(user)
+    .send(userInvalid)
 
 
-    expect(res.statusCode).toBe(200)
-    expect(res.body).toBeDefined()
-    expect(res.body.user.email).toBe(user.email)
-    expect(res.body.token).toBeDefined()
-
-})
+    expect(res.statusCode).toBe(401)
+    })
 
 test("Delete -> 'BASE_URL/id', should return statusCode 204", async () => {
     const res = await request(app)
